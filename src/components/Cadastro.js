@@ -3,7 +3,8 @@ import React from 'react';
 class Cadastro extends React.Component {
 
   state = {
-    serviços: {
+    serviços: 
+    {
       id: 0,
       nome: "atalho",
       descricao: "encurta seu caminho",
@@ -21,10 +22,16 @@ class Cadastro extends React.Component {
     this.setState({preco: event.target.value})
   }
 
+  nomeNoEstado = (event) => {
+    this.setState({nome: event.target.value})
+  }
+
+  descricaoNoEstado = (event) => {
+    this.setState({descricao: event.target.value})
+  }
+
   confereBotao = () => {
-    let input = document.getElementById('qualquer')
-    console.log(typeof(input))
-    console.log(input)
+    console.log(this.state.serviços)
   }
 
   render () {
@@ -33,11 +40,13 @@ class Cadastro extends React.Component {
         <h2>Cadastre seu serviço</h2>
         <input 
         placeholder='Nome do serviço'
-        
+        value={this.state.serviços.nome}
+        onChange={this.nomeNoEstado}
         />
         <input 
         placeholder='Descrição do serviço'
-        
+        value={this.state.serviços.descricao}
+        onChange={this.descricaoNoEstado}
         />
         <input
         type='number' 
