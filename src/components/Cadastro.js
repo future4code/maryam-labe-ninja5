@@ -2,8 +2,29 @@ import React from 'react';
 
 class Cadastro extends React.Component {
 
+  state = {
+    serviços: {
+      id: 0,
+      nome: "atalho",
+      descricao: "encurta seu caminho",
+      preco: 10,
+      pagamento: 'boleto',
+      prazo: ''
+    }
+  }
+
+  dataNoEstado = (event) => {
+    this.setState({prazo: event.target.value})
+  }
+
+  precoNoEstado = (event) => {
+    this.setState({preco: event.target.value})
+  }
+
   confereBotao = () => {
-    alert('OK')
+    let input = document.getElementById('qualquer')
+    console.log(typeof(input))
+    console.log(input)
   }
 
   render () {
@@ -21,17 +42,20 @@ class Cadastro extends React.Component {
         <input
         type='number' 
         placeholder='Preço do serviço'
-        
+        value={this.state.serviços.preco}
+        onChange={this.precoNoEstado}
         />
         <select size='4'>
-          <option value='Cartão de Débito'>Cartão de Débito</option>
-          <option value='Cartão de Crédito'>Cartão de Crédito</option>
+          <option value='Débito'>Cartão de Débito</option>
+          <option value='Crédito'>Cartão de Crédito</option>
           <option value='PayPal'>PayPal</option>
           <option value='Boleto'>Boleto</option>
         </select>
         <input
+        id='qualquer'
         type='date'
-
+        value={this.state.serviços.prazo}
+        onChange={this.dataNoEstado}
         />
         <button onClick={this.confereBotao}>Concluir cadastro</button>
       </div>
