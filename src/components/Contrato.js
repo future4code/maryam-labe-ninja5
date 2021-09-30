@@ -16,11 +16,16 @@ class Contrato extends React.Component {
         cardsServicos: [],
         filtroMinimo: 0,
         filtroMaximo: 0,
-        filtroNome: ''
+        filtroNome: '',
+        ordem: ''
     }
 
     componentDidMount = () => {
         this.pegaServicos()
+    }
+
+    preencheOrdem = (event) => {
+        this.setState({ordem: event.target.value})
     }
 
     preencheFiltroMinimo = (event) => {
@@ -75,13 +80,34 @@ class Contrato extends React.Component {
                 return servico
             }
         })
-        return filtrosNome
+
+        let ordenacaoDeServicos = filtrosNome.sort((a, b) => {
+            switch (this.state.ordem) {
+                case 'Menor valor':
+                    return a.price - b.price
+                
+                case 'Maior valor':
+                    return b.price - a.price
+
+                case 'Nome':
+                    if (a.title.toLowerCase() < b.title.toLowerCase()) {return -1}
+                    if (a.title.toLowerCase() > b.title.toLowerCase()) {return 1}
+                    return 0
+                        
+                case 'Prazo':
+                    return Number(a.dueDate) - Number(b.dueDate)
+
+                default:
+                    return this.state.cardsServicos
+            }
+        })
+
+        return ordenacaoDeServicos
     }
 
     render () {
 
         const servicosFiltrados = this.filtraServicos()
-        console.log(servicosFiltrados)
 
         let cardsParaRenderizar = servicosFiltrados.map((servico) => {
             return <Card key = {servico.id}
@@ -111,7 +137,9 @@ class Contrato extends React.Component {
                 value = {this.state.filtroNome}
                 onChange = {this.preencheFiltroNome}
                 />
-                <select>
+                <select
+                onChange={this.preencheOrdem}
+                >
                     <option value='Sem ordenação'>Sem ordenação</option>
                     <option value='Menor valor'>Menor valor</option>
                     <option value='Maior valor'>Maior valor</option>
