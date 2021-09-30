@@ -13,11 +13,26 @@ margin: 12px;
 class Contrato extends React.Component {
 
     state = {
-        cardsServicos: []
+        cardsServicos: [],
+        filtroMinimo: 0,
+        filtroMaximo: 0,
+        filtroNome: ''
     }
 
     componentDidMount = () => {
         this.pegaServicos()
+    }
+
+    preencheFiltroMinimo = (event) => {
+        this.setState({filtroMinimo: event.target.value})
+    }
+
+    preencheFiltroMaximo = (event) => {
+        this.setState({filtroMaximo: event.target.value})
+    }
+
+    preencheFiltroNome = (event) => {
+        this.setState({filtroNome: event.target.value})
     }
 
     pegaServicos = () => {
@@ -32,30 +47,69 @@ class Contrato extends React.Component {
             this.setState({cardsServicos: response.data.jobs})
         }))
         .catch((error) => {
-            console.log(error)
+            alert(error)
         })
+    }        
+
+    filtraServicos = () => {
+        let filtrosMinimos = this.state.cardsServicos.filter((servico) => {
+            if (this.state.filtroMinimo) {
+                return servico.price >= this.state.filtroMinimo
+            } else {
+                return servico
+            }
+        })
+
+        let filtrosMaximos = filtrosMinimos.filter((servico) => {
+            if (this.state.filtroMaximo) {
+                return servico.price <= this.state.filtroMaximo
+            } else {
+                return servico
+            }
+        })
+
+        let filtrosNome = filtrosMaximos.filter((servico) => {
+            if (this.state.filtroNome) {
+                return servico.title.toLowerCase().includes(this.state.filtroNome.toLowerCase())
+            } else {
+                return servico
+            }
+        })
+        return filtrosNome
     }
 
     render () {
 
-        let cardsParaRenderizar = this.state.cardsServicos.map((servico) => {
+        const servicosFiltrados = this.filtraServicos()
+        console.log(servicosFiltrados)
+
+        let cardsParaRenderizar = servicosFiltrados.map((servico) => {
             return <Card key = {servico.id}
             titulo = {servico.title}
-            preco = {servico.description}
-            prazo = {servico.price}
+            preco = {servico.price}
+            prazo = {servico.dueDate}
             />
         })
 
         return (
             <div>
                 <input
+                type='search'
                 placeholder="Preço mínimo"
+                value = {this.state.filtroMinimo}
+                onChange = {this.preencheFiltroMinimo}
                 />
                 <input
+                type='search'
                 placeholder='Preço máximo'
+                value = {this.state.filtroMaximo}
+                onChange = {this.preencheFiltroMaximo}
                 />
                 <input
+                type='search'
                 placeholder='Busca por nome'
+                value = {this.state.filtroNome}
+                onChange = {this.preencheFiltroNome}
                 />
                 <select>
                     <option value='Sem ordenação'>Sem ordenação</option>
