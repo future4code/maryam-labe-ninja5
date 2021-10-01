@@ -105,7 +105,7 @@ class Contrato extends React.Component {
           return 0;
 
         case "Prazo":
-          return Number(a.dueDate) - Number(b.dueDate);
+          return new Date(a.dueDate) - new Date(b.dueDate);
 
         default:
           return this.state.cardsServicos;
