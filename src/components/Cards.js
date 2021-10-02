@@ -14,7 +14,7 @@ class Card extends React.Component {
                 <h4>{this.props.preco}</h4>
                 <h4>{this.props.prazo}</h4>
                 <button>Ver Detalhes</button>
-                <button>Adicionar no Carrinho</button>
+                <button onClick={this.props.adicionaCarrinho}>Adicionar no Carrinho</button>
             </Cartao>
         )
     }

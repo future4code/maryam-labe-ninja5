@@ -88,6 +88,7 @@ class Contrato extends React.Component {
             titulo = {servico.title}
             preco = {servico.price}
             prazo = {servico.dueDate}
+            adicionaCarrinho = {() => this.props.onClick(servico)}
             />
         })
 
