@@ -65,7 +65,6 @@ class Cadastro extends React.Component {
   }
 
   render () {
-    // console.log(this.state.serviços)
     return (
       <div>
         <h2>Cadastre seu serviço</h2>
