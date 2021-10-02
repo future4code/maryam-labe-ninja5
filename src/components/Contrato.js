@@ -11,6 +11,7 @@ const LayoutCards = styled.div`
 `;
 
 class Contrato extends React.Component {
+
   state = {
     cardsServicos: [],
     filtroMinimo: "",

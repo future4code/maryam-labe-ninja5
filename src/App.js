@@ -7,7 +7,8 @@ import Carrinho from './components/Carrinho';
 class App extends React.Component {
 	
 	state = {
-		telaExibida: ""
+		telaExibida: "",
+		carrinho: []
 	}
 
 	componentDidMount = () => {
@@ -30,16 +31,35 @@ class App extends React.Component {
 		this.setState({telaExibida: 'lobby'})
 	}
 
+	adicionaNoCarrinho = (servico) => {
+		const novoCarrinho = [...this.state.carrinho, servico]
+		this.setState({carrinho: novoCarrinho})
+	}
+
+	removeDoCarrinho = (servicoRemovivel) => {
+		const outroCarrinho = this.state.carrinho.filter(servico => {
+			if(servicoRemovivel.id !== servico.id) {
+				return servico
+			}
+		})
+		this.setState({carrinho: outroCarrinho})
+	}
+
 	trocaTela = () => {
 		switch (this.state.telaExibida) {
 			case 'cadastro':
 				return <Cadastro/>
 
 			case 'contrato':
-				return <Contrato/>
+				return <Contrato
+						onClick={this.adicionaNoCarrinho}
+						/>
 
 			case 'carrinho':
-				return <Carrinho/>
+				return <Carrinho
+						servicosCarrinho={this.state.carrinho}
+						removeCarrinho={this.removeDoCarrinho}
+						/>
 
 			case 'lobby':
 				return <Lobby
