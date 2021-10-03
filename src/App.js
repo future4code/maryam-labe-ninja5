@@ -3,12 +3,14 @@ import Cadastro from './components/Cadastro';
 import Contrato from './components/Contrato';
 import Lobby from './components/Lobby';
 import Carrinho from './components/Carrinho';
+import Detalhes from './components/Detalhes';
 
 class App extends React.Component {
 	
 	state = {
 		telaExibida: "",
-		carrinho: []
+		carrinho: [],
+		idDoServico: ""
 	}
 
 	componentDidMount = () => {
@@ -29,6 +31,10 @@ class App extends React.Component {
 
 	exibeLobby = () => {
 		this.setState({telaExibida: 'lobby'})
+	}
+
+	exibeDetalhes = (servicoId) => {
+		this.setState({telaExibida: 'detalhes', idDoServico: servicoId})
 	}
 
 	adicionaNoCarrinho = (servico) => {
@@ -53,6 +59,7 @@ class App extends React.Component {
 			case 'contrato':
 				return <Contrato
 						onClick={this.adicionaNoCarrinho}
+						mostraDetalhes={this.exibeDetalhes}
 						/>
 
 			case 'carrinho':
@@ -64,6 +71,12 @@ class App extends React.Component {
 			case 'lobby':
 				return <Lobby
 						exibeCadastro={this.exibeCadastro}
+						exibeContrato={this.exibeContrato}
+						/>
+
+			case 'detalhes':
+				return <Detalhes
+						servicoId={this.state.idDoServico}
 						exibeContrato={this.exibeContrato}
 						/>
 

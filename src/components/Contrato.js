@@ -127,7 +127,10 @@ class Contrato extends React.Component {
           titulo={servico.title}
           preco={servico.price}
           prazo={servico.dueDate}
+          servicoId={servico.id}
+          adicionaCarrinho={() => this.props.onClick(servico)}
           handleDeletarServico={this.handleDeletarServico}
+          detalhes={this.props.mostraDetalhes}
         />
       );
     });

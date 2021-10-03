@@ -34,7 +34,7 @@ class Card extends React.Component {
         <h3>{this.props.titulo}</h3>
         <h4>{this.props.preco}</h4>
         <h4>{this.props.prazo}</h4>
-        <button>Ver Detalhes</button>
+        <button onClick={() => this.props.detalhes(this.props.servicoId)}>Ver Detalhes</button>
         <button onClick={this.props.adicionaCarrinho}>Adicionar no Carrinho</button>
         <button id={this.props.id} onClick={this.deletarServico}>
           X
