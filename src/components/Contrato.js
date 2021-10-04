@@ -5,13 +5,39 @@ import axios from "axios";
 
 const LayoutCards = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 12px;
-  margin: 12px;
+
+  background-color: black;
+`;
+
+const Titulo = styled.div`
+  background-color: black;
+  color: red;
+  font-style: italic;
+  text-align: center;
+  padding: 20px;
+`;
+
+const Inputs = styled.div`
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  input {
+    border: 2px solid red;
+    margin: 12px;
+    font-style: italic;
+  }
+
+  select {
+    margin: 12px;
+  }
 `;
 
 class Contrato extends React.Component {
-
   state = {
     cardsServicos: [],
     filtroMinimo: "",
@@ -137,31 +163,36 @@ class Contrato extends React.Component {
 
     return (
       <div>
-        <input
-          type="search"
-          placeholder="Preço mínimo"
-          value={this.state.filtroMinimo}
-          onChange={this.preencheFiltroMinimo}
-        />
-        <input
-          type="search"
-          placeholder="Preço máximo"
-          value={this.state.filtroMaximo}
-          onChange={this.preencheFiltroMaximo}
-        />
-        <input
-          type="search"
-          placeholder="Busca por nome"
-          value={this.state.filtroNome}
-          onChange={this.preencheFiltroNome}
-        />
-        <select onChange={this.preencheOrdem}>
-          <option value="Sem ordenação">Sem ordenação</option>
-          <option value="Menor valor">Menor valor</option>
-          <option value="Maior valor">Maior valor</option>
-          <option value="Nome">Nome</option>
-          <option value="Prazo">Prazo</option>
-        </select>
+        <Titulo>
+          <h2>Serviços</h2>
+        </Titulo>
+        <Inputs>
+          <input
+            type="search"
+            placeholder="Preço mínimo"
+            value={this.state.filtroMinimo}
+            onChange={this.preencheFiltroMinimo}
+          />
+          <input
+            type="search"
+            placeholder="Preço máximo"
+            value={this.state.filtroMaximo}
+            onChange={this.preencheFiltroMaximo}
+          />
+          <input
+            type="search"
+            placeholder="Busca por nome"
+            value={this.state.filtroNome}
+            onChange={this.preencheFiltroNome}
+          />
+          <select onChange={this.preencheOrdem}>
+            <option value="Sem ordenação">Sem ordenação</option>
+            <option value="Menor valor">Menor valor</option>
+            <option value="Maior valor">Maior valor</option>
+            <option value="Nome">Nome</option>
+            <option value="Prazo">Prazo</option>
+          </select>
+        </Inputs>
         <LayoutCards>{cardsParaRenderizar}</LayoutCards>
       </div>
     );
